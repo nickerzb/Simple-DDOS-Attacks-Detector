@@ -29,23 +29,8 @@ def print_culprits(culprits):
     # Write to file per requirements
     with open(filename, 'w') as f:
       f.write("\n".join(culprits))
-  
 
-if __name__ == '__main__':
-  parser = argparse.ArgumentParser()
-  parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
-  parser.add_argument('-t', '--topic', default='demo')
-  parser.add_argument('-w', '--window', default=3000)
-  parser.add_argument('-x', '--times', default=5)
-  args = parser.parse_args()
-  print('Starting the process...')
-  start=datetime.now()
-  consumer = KafkaConsumer(args.topic,
-                         group_id='my-group',
-                         bootstrap_servers=[args.host],
-                         auto_offset_reset='earliest',
-                         enable_auto_commit=False,
-                         consumer_timeout_ms=1000)
+def process_messages(consumer):
   window = []
   kvs = {}
   culprits = set()
@@ -85,3 +70,21 @@ if __name__ == '__main__':
   print('Process ended.')
   print('Time taken:', datetime.now()-start)
   print_culprits(culprits)
+  
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
+  parser.add_argument('-t', '--topic', default='demo')
+  parser.add_argument('-w', '--window', default=3000)
+  parser.add_argument('-x', '--times', default=4)
+  args = parser.parse_args()
+  print('Starting the process...')
+  start=datetime.now()
+  consumer = KafkaConsumer(args.topic,
+                         group_id='my-group',
+                         bootstrap_servers=[args.host],
+                         auto_offset_reset='earliest',
+                         enable_auto_commit=False,
+                         consumer_timeout_ms=1000)
+  process_messages(consumer)
