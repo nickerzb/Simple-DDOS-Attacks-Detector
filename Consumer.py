@@ -5,6 +5,11 @@ from datetime import datetime
 import json
 import argparse
 
+def print_log(message):
+    print ("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
+                                          message.offset, message.key,
+                                          message.value))
+
 def get_ip(message):
   obj = json.loads(message.value)
   return obj["remote_host"]
@@ -46,13 +51,7 @@ if __name__ == '__main__':
   culprits = set()
 
   for message in consumer:
-    # message value and key are raw bytes -- decode if necessary!
-    # e.g., for unicode: `message.value.decode('utf-8')`
-    # print ("%s:%d:%d: key=%s value=%s" % (message.topic, message.partition,
-    #                                       message.offset, message.key,
-    #                                       message.value))
-
-    
+    # print_log(message)
     ip = get_ip(message)
 
     # if sliding window is full, remove head, decrement dictionary, remove from dict no value
