@@ -9,14 +9,28 @@ def get_ip(message):
   obj = json.loads(message.value)
   return obj["remote_host"]
 
+def print_culprits(culprits):
+  if not culprits:
+    print("No culprits found")
+  else:
+    print('All Culprits:')
+    print("\n".join(culprits))
+    filename = 'text-run.txt'
+    # Clear old contents
+    open(filename, 'w').close()
+    # Write to file per requirements
+    with open(filename, 'w') as f:
+      f.write("\n".join(culprits))
+  
+
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
   parser.add_argument('-t', '--topic', default='demo')
-  parser.add_argument('-w', '--window', default=400)
-  parser.add_argument('-x', '--times', default=2)
+  parser.add_argument('-w', '--window', default=500)
+  parser.add_argument('-x', '--times', default=50)
   args = parser.parse_args()
-  print('Starting the process...\n')
+  print('Starting the process...')
   start=datetime.now()
   consumer = KafkaConsumer(args.topic,
                          group_id='my-group',
@@ -68,12 +82,4 @@ if __name__ == '__main__':
     # time.sleep(5)
   print('Process ended.')
   print('Time taken:', datetime.now()-start)
-  print('All Culprits:')
-  print("\n".join(culprits))
-
-  filename = 'text-run.txt'
-  # Clear old contents
-  open(filename, 'w').close()
-  # Write to file per requirements
-  with open(filename, 'w') as f:
-    f.write("\n".join(culprits))
+  print_culprits(culprits)
