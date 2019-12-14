@@ -10,12 +10,15 @@ def get_ip(message):
   return obj["remote_host"]
 
 def print_culprits(culprits):
+  filename = 'text-run.txt'
+  open(filename, 'w').close()
   if not culprits:
     print("No culprits found")
   else:
     print('All Culprits:')
-    print("\n".join(culprits))
-    filename = 'text-run.txt'
+    print(",".join(culprits))
+
+    print('Writing results to file:', filename)
     # Clear old contents
     open(filename, 'w').close()
     # Write to file per requirements
@@ -27,8 +30,8 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
   parser.add_argument('-t', '--topic', default='demo')
-  parser.add_argument('-w', '--window', default=500)
-  parser.add_argument('-x', '--times', default=50)
+  parser.add_argument('-w', '--window', default=3000)
+  parser.add_argument('-x', '--times', default=5)
   args = parser.parse_args()
   print('Starting the process...')
   start=datetime.now()
