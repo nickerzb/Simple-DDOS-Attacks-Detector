@@ -1,7 +1,6 @@
-# Simple DDOS Attacks Detector
+# Simple DDOS Attacks Detector with sliding window
 
 ### Prerequisite
-```Spark Streaming (Python API)```  
 ```Apache Kafka (Python API)```   
 ```Python 2.7 or above``` 
 

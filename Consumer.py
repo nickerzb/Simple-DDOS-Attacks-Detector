@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # if the current IP has been recorded x amount of times, report it to unique set
     if kvs[ip] >= args.times:
       if not ip in culprits:
-        print('FOUND CULPRIT IP: ', ip)
+        print('FOUND CULPRIT IP:', ip)
         culprits.add(ip)
 
     # logging/debugging
