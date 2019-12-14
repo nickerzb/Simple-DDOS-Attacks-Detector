@@ -12,7 +12,7 @@ def get_ip(message):
 if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
-  parser.add_argument('-t', '--topic', default='small4')
+  parser.add_argument('-t', '--topic', default='demo')
   parser.add_argument('-w', '--window', default=400)
   parser.add_argument('-x', '--times', default=2)
   args = parser.parse_args()

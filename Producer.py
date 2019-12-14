@@ -26,7 +26,7 @@ def send_message(producer, topic, input):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
-    parser.add_argument('-t', '--topic', default='messages')
+    parser.add_argument('-t', '--topic', default='demo')
     parser.add_argument('-i', '--input', required=True)
     args = parser.parse_args()
     producer = KafkaProducer(bootstrap_servers=args.host)
