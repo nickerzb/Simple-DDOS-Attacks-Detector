@@ -7,7 +7,7 @@
 ### Description
 The program is able to identify potential DDOS attack on the fly from a given apache log file input.  
 ```Producer step```: The log messages are digested and put into Kafka stream.  
-```Consumer step```: The log messages are sent to and read by consuming the Kafka stream.
+```Consumer step```: The log messages are sent to and read by consuming the Kafka stream.  
 ```Analysis step```: In this process, I kept track of three different datasets:  An array of the last X IP addresses seen (sliding window protocol), a dictionary/hashmap of the how many times that IP address is in the sliding window array (improved time complexity over spacial complexity), and the list of culprit IP addresses for logging/output.  If any IP address shows up Y times in the last X IP addresses, it is flagged.
 
 ### Future steps
