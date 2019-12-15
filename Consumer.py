@@ -14,14 +14,15 @@ def get_ip(message):
   obj = json.loads(message.value)
   return obj["remote_host"]
 
-def print_culprits(culprits):
+def print_culprits(culprits, isDebug):
   filename = 'text-run.txt'
   open(filename, 'w').close()
   if not culprits:
     print("No culprits found")
   else:
-    print('All Culprits:')
-    print(",".join(culprits))
+    if isDebug:
+      print('All Culprits:')
+      print(",".join(culprits))
 
     print('Writing results to file:', filename)
     # Clear old contents
@@ -30,7 +31,7 @@ def print_culprits(culprits):
     with open(filename, 'w') as f:
       f.write("\n".join(culprits))
 
-def process_messages(consumer):
+def process_messages(args, consumer):
   start=datetime.now()
   window = []
   kvs = {}
@@ -63,15 +64,16 @@ def process_messages(consumer):
         culprits.add(ip)
 
     # logging/debugging
-    # print('current ip: ', ip)
-    # print(window)
-    # print(kvs)
-    # print(culprits)
-    # print()
-    # time.sleep(5)
+    if args.debug:
+      print('current ip: ', ip)
+      print(window)
+      print(kvs)
+      print(culprits)
+      print()
+      time.sleep(5)
   print('Process ended.')
   print('Time taken:', datetime.now()-start)
-  print_culprits(culprits)
+  print_culprits(culprits, args.debug)
   
 
 if __name__ == '__main__':
@@ -79,7 +81,8 @@ if __name__ == '__main__':
   parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
   parser.add_argument('-t', '--topic', default='demo')
   parser.add_argument('-w', '--window', default=3000)
-  parser.add_argument('-x', '--times', default=5)
+  parser.add_argument('-x', '--times', default=4)
+  parser.add_argument('-d', '--debug', default=False)
   args = parser.parse_args()
   consumer = KafkaConsumer(args.topic,
                          group_id='my-group',
@@ -87,4 +90,4 @@ if __name__ == '__main__':
                          auto_offset_reset='earliest',
                          enable_auto_commit=False,
                          consumer_timeout_ms=1000)
-  process_messages(consumer)
+  process_messages(args,consumer)
