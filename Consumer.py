@@ -80,10 +80,12 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-rh', '--host', default="127.0.0.1:9092")
   parser.add_argument('-t', '--topic', default='demo')
-  parser.add_argument('-w', '--window', default=500)
-  parser.add_argument('-x', '--times', default=100)
+  parser.add_argument('-w', '--window', default=5000)
+  parser.add_argument('-x', '--times', default=3)
   parser.add_argument('-d', '--debug', default=False)
   args = parser.parse_args()
+  args.times = int(args.times)
+  args.window = int(args.window)
   consumer = KafkaConsumer(args.topic,
                          group_id='my-group',
                          bootstrap_servers=[args.host],
