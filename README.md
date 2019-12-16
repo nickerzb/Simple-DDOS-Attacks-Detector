@@ -15,12 +15,16 @@ Improve detection system
   - Abnormal requests for the same document
   - Rate limiting type style where each IP has a given number of requests in a given time frame
   - Analysis on better default values
+  
 Improve logging
   - Duration of attack per IP
   - Number of occurances
   - IP addresses that were flagged around the same time (DDOS)
+  
 Spark
   - Initially was going to do this, but Spark dropped support for Python recently
+  
 Output result to API
   - Permanent data storage per run
+
 Build UI to show historic runs
